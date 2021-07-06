@@ -17,8 +17,6 @@ type
   Answer* = enum
     None, No, Yes, Default
 
-  NasherError* = object of CatchableError
-
 const
   colWidth = len("Initializing")
   foregrounds: array[Error .. Prompt, ForegroundColor] =
@@ -113,8 +111,9 @@ proc error*(msg: string) =
   display("Error:", msg, displayType = Error, priority = HighPriority)
 
 proc fatal*(msg: string) =
-  ## Raises a ``NasherError`` exception with message ``msg``.
-  raise newException(NasherError, msg)
+  ## Displays an error message and quits
+  error(msg)
+  quit(QuitFailure)
 
 proc success*(msg: string, priority: Priority = MediumPriority) =
   display("Success:", msg, displayType = Success, priority = priority)

@@ -108,9 +108,6 @@ when isMainModule:
                launch(opts)
       else:
         help(helpAll, QuitFailure)
-  except NasherError:
-    error(getCurrentExceptionMsg())
-    quit(QuitFailure)
   except:
     error("An unknown error occurred. Please file a bug report at " &
           "https://github.com/squattingmonk/nasher.nim/issues using the " &
