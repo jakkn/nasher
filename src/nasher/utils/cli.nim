@@ -116,6 +116,7 @@ proc fatal*(msg: string) =
   quit(QuitFailure)
 
 proc success*(msg: string, priority: Priority = MediumPriority) =
+  ## Convenience proc for diplaying a success message
   display("Success:", msg, displayType = Success, priority = priority)
 
 proc hint*(msg: string) =
