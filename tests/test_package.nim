@@ -2,7 +2,7 @@ import unittest
 from sequtils import zip
 from strutils import contains, `%`
 
-import nasher/pkgparser
+import nasher/utils/package
 
 proc dumpTarget(target: Target) =
   ## Helps debug failing tests
@@ -60,7 +60,7 @@ suite "Cfg file parsing":
     name = "foo"
     """)
     check: targets.len == 1
-  
+
   test "[sources], [rules], and [aliases] can be top-level sections":
     check parsePackageString("""
     [sources]
@@ -99,7 +99,7 @@ suite "Cfg file parsing":
     [target]
     name = "foo"
     """)
-    
+
     check:
       targets.len == 2
       targets[0].includes == @["bar"]
@@ -341,7 +341,7 @@ suite "Cfg file parsing":
       target.excludes == @["baz", "qux"]
       target.filters == @["*.foo", "*.bar"]
       target.flags == @["--foo", "--bar"]
-  
+
   test "Unpack rules added to seq":
     let target = parsePackageString("""
     [rules]
@@ -389,7 +389,7 @@ suite "Cfg file parsing":
 
     [target]
     name = "foo"
-      
+
       [aliases]
       utils = "../sm-utils/src"
 
@@ -458,7 +458,7 @@ suite "Cfg file parsing":
                        aliases: newStringTable({"sm-utils": "src/utils", "core": "src/core"}))
       manual = @[targetA, targetB]
       parsed = parsePackageString(pkg)
-    
+
     check parsed.len == manual.len
     for (a, b) in zip(manual, parsed):
       check a == b
