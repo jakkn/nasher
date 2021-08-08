@@ -15,7 +15,10 @@ type
     DebugPriority, LowPriority, MediumPriority, HighPriority
 
   Answer* = enum
-    None, No, Yes, Default
+    None    = (0, "none")
+    No      = (1, "no")
+    Yes     = (2, "yes")
+    Default = (3, "default")
 
 const
   colWidth = len("Initializing")
@@ -34,11 +37,17 @@ var cli = CLI(showColor: stdout.isatty, logLevel: MediumPriority, forceAnswer: N
 proc setLogLevel*(level: Priority) =
   cli.logLevel = level
 
+proc getLogLevel*: Priority =
+  cli.logLevel
+
 proc isLogging*(level: Priority): bool =
   cli.logLevel <= level
 
 proc setShowColor*(val: bool) =
   cli.showColor = val
+
+proc getShowColor*: bool =
+  cli.showColor
 
 proc setForceAnswer*(val: Answer) =
   cli.forceAnswer = val
